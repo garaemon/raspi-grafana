@@ -34,3 +34,5 @@ services:
       - 'env.grafana'
     links:
       - influxdb
+    volumes:
+      - /var/lib/grafana:/var/lib/grafana
