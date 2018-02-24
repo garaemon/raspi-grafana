@@ -36,3 +36,17 @@ services:
       - influxdb
     volumes:
       - /var/lib/grafana:/var/lib/grafana
+
+  speedtest:
+    restart: always
+    image: garaemon/speedtest-into-influxdb
+    container_name: speedtest
+    links:
+      - influxdb
+    environment:
+      # Do not add quotes
+      - INFLUXDB_HOST=influxdb
+      - INFLUXDB_DATABASE=speedtest
+      - INFLUXDB_PORT=8086
+      # once for 20minutes
+      - SPEEDTEST_FRQUENCY=1200
