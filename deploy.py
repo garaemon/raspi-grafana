@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 # script to setup grafana, telegraf and influxdb on raspberry pi
 
@@ -8,9 +8,18 @@ import os
 
 
 def install_docker():
-    subprocess.check_call(['curl -sSL https://get.docker.com/ | sh'], shell=True)
+    try:
+        # check command exists first
+        subprocess.check_call(['command', '-v', 'docker'], shell=True)
+    except subprocess.CalledProcessError:
+        subprocess.check_call(['curl -sSL https://get.docker.com/ | sh'], shell=True)
+
     subprocess.check_call(['sudo usermod -aG docker ${USER}'], shell=True)
-    subprocess.check_call(['sudo apt-get install docker-compose --yes'], shell=True)
+
+    try:
+        subprocess.check_call(['command', '-v', 'docker-compose'], shell=True)
+    except subprocess.CalledProcessError:
+        subprocess.check_call(['sudo apt-get install docker-compose --yes'], shell=True)
 
 
 def install_docker_images():
@@ -26,8 +35,6 @@ def main():
     install_docker()
     install_docker_images()
     run_docker()
-    #install_grafana()
-    #install_telegraf()
 
 
 if __name__ == '__main__':
