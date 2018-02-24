@@ -23,6 +23,11 @@ services:
       - influxdb
     volumes:
       - ./telegraf.conf:/etc/telegraf/telegraf.conf:ro
+      # mounting for stats
+      - /sys:/rootfs/sys:ro
+      - /proc:/rootfs/proc:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /var/run/utmp:/var/run/utmp:ro
 
   grafana:
     restart: always
