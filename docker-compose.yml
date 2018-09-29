@@ -2,7 +2,7 @@ version: "2"
 services:
   influxdb:
     restart: always
-    image: hypriot/rpi-influxdb:latest
+    image: garaemon/raspbian-influxdb:latest
     container_name: influxdb
     ports:
       - "8083:8083"
